@@ -1,317 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, Ky! (The Cutest Ever)</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Google Fonts: Pacifico (bubbly) and Inter (default text) -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Custom Tailwind Configuration */
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'bubbly': ['Pacifico', 'cursive'],
-                        'sans': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'mint-bg': '#e8f5e9', /* Very soft mint/pale green */
-                        'mint-accent': '#66bb6a', /* Soft green accent */
-                        'mint-dark': '#388e3c', /* Medium green */
-                        'pink-pop': '#ff80ab', /* Pop of cute pink */
-                    }
-                }
-            }
-        }
-        
-        /* Custom CSS */
-        body {
-            background-color: #e8f5e9; /* Soft mint background */
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            position: relative;
-            overflow: hidden; /* Hide overflow from moving cat */
-        }
-        
-        /* The main content box */
-        .main-card {
-            border: 4px dashed #a5d6a7; /* Dashed border for doodle look */
-            border-radius: 3rem;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            background: white;
-            z-index: 10;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Ky! (The Cutest Ever)</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Google Fonts: Pacifico (bubbly) and Inter (default text) -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Tailwind Configuration */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'bubbly': ['Pacifico', 'cursive'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'mint-bg': '#e8f5e9', /* Very soft mint/pale green */
+                        'mint-accent': '#66bb6a', /* Soft green accent */
+                        'mint-dark': '#388e3c', /* Medium green */
+                        'pink-pop': '#ff80ab', /* Pop of cute pink */
+                    }
+                }
+            }
+        }
+        
+        /* Custom CSS */
+        body {
+            background-color: #e8f5e9; /* Soft mint background */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden; /* Hide overflow from moving cat */
+        }
+        
+        /* The main content box */
+        .main-card {
+            border: 4px dashed #a5d6a7; /* Dashed border for doodle look */
+            border-radius: 3rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            background: white;
+            z-index: 10;
+        }
 
-        /* Doodled Corners */
-        .doodle {
-            position: absolute;
-            font-size: 2.5rem;
-            color: #ff80ab; /* Pink pop */
-            user-select: none;
-            z-index: 5;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        #doodle-tl { top: 1rem; left: 1rem; transform: rotate(-15deg); }
-        #doodle-tr { top: 1rem; right: 1rem; transform: rotate(15deg); }
-        #doodle-bl { bottom: 1rem; left: 1rem; transform: rotate(10deg); }
-        #doodle-br { bottom: 1rem; right: 1rem; transform: rotate(-10deg); }
+        /* Doodled Corners */
+        .doodle {
+            position: absolute;
+            font-size: 2.5rem;
+            color: #ff80ab; /* Pink pop */
+            user-select: none;
+            z-index: 5;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        #doodle-tl { top: 1rem; left: 1rem; transform: rotate(-15deg); }
+        #doodle-tr { top: 1rem; right: 1rem; transform: rotate(15deg); }
+        #doodle-bl { bottom: 1rem; left: 1rem; transform: rotate(10deg); }
+        #doodle-br { bottom: 1rem; right: 1rem; transform: rotate(-10deg); }
 
-        /* Animation for Ky's sketch */
-        .spin-ky {
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy spin */
-        }
+        /* Animation for Ky's sketch */
+        .spin-ky {
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy spin */
+        }
 
-        .spin-ky.spinning {
-            transform: rotate(360deg) scale(1.1);
-        }
+        .spin-ky.spinning {
+            transform: rotate(360deg) scale(1.1);
+        }
 
-        /* Cat interactive element */
-        .cat-interactive {
-            position: absolute;
-            transition: transform 1.2s cubic-bezier(0.42, 0, 0.58, 1.0), filter 0.2s; /* Smooth movement */
-            cursor: pointer;
-            z-index: 50; 
-            user-select: none;
-            /* Initial centered position (will be overridden by JS) */
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%); 
-        }
+        /* Cat interactive element */
+        .cat-interactive {
+            position: absolute;
+            transition: transform 1.2s cubic-bezier(0.42, 0, 0.58, 1.0), filter 0.2s; /* Smooth movement */
+            cursor: pointer;
+            z-index: 50; 
+            user-select: none;
+            /* Initial centered position (will be overridden by JS) */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%); 
+        }
 
-        .cat-interactive:active {
-            filter: drop-shadow(0 0 10px #ff80ab);
-        }
+        .cat-interactive:active {
+            filter: drop-shadow(0 0 10px #ff80ab);
+        }
 
-        /* Bouncy Text Animation */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
+        /* Bouncy Text Animation */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
 
-        .bouncing-letter {
-            display: inline-block;
-            animation: bounce 2.5s infinite ease-in-out;
-            font-weight: 700;
-        }
+        .bouncing-letter {
+            display: inline-block;
+            animation: bounce 2.5s infinite ease-in-out;
+            font-weight: 700;
+        }
 
-        /* Button style */
-        .bubbly-button {
-            transition: all 0.2s;
-            box-shadow: 0 5px #388e3c;
-            border-bottom: 3px solid #388e3c;
-        }
-        .bubbly-button:active {
-            transform: translateY(3px);
-            box-shadow: 0 2px #388e3c;
-        }
-    </style>
+        /* Button style */
+        .bubbly-button {
+            transition: all 0.2s;
+            box-shadow: 0 5px #388e3c;
+            border-bottom: 3px solid #388e3c;
+        }
+        .bubbly-button:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px #388e3c;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Doodled Corners -->
-    <div id="doodle-tl" class="doodle">⭐</div>
-    <div id="doodle-tr" class="doodle">🌸</div>
-    <div id="doodle-bl" class="doodle">💖</div>
-    <div id="doodle-br" class="doodle">✨</div>
+    <!-- Doodled Corners -->
+    <div id="doodle-tl" class="doodle">⭐</div>
+    <div id="doodle-tr" class="doodle">🌸</div>
+    <div id="doodle-bl" class="doodle">💖</div>
+    <div id="doodle-br" class="doodle">✨</div>
 
-    <!-- Cute Cat Sketch Interactive Element -->
-    <div id="catInteractive" class="cat-interactive" onclick="moveCatHyperactively()">
-        <!-- Sketchy Cat SVG (Line Art) -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#ff80ab" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 md:w-20 md:h-20 drop-shadow-md">
-            <!-- Cat Head, Ears, Whiskers, Smile -->
-            <path d="M12 2a10 10 0 0 0 0 20c-1.33 0-2.58-.4-3.58-1.1M12 2c1.33 0 2.58.4 3.58 1.1M16 4.5l-2.5 3"/>
-            <path d="M8 4.5l2.5 3M8 12h8"/>
-            <path d="M10 16s.5 2 2 2 2-2 2-2"/>
-            <path d="M9 10a1 1 0 1 0 2 0 1 1 0 1 0-2 0"/>
-            <path d="M15 10a1 1 0 1 0 2 0 1 1 0 1 0-2 0"/>
-            <!-- Cute details for a "sketch" feel -->
-            <path d="M4 14l-.5 2M20 14l.5 2"/>
-            <path d="M4 14l1.5-1M20 14l-1.5-1"/>
-        </svg>
-        <p class="text-xs text-pink-pop font-semibold mt-1">Click Me!</p>
-    </div>
+    <!-- Cute Cat Sketch Interactive Element -->
+    <div id="catInteractive" class="cat-interactive" onclick="moveCatHyperactively()">
+        <!-- Sketchy Cat SVG (Line Art) -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#ff80ab" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 md:w-20 md:h-20 drop-shadow-md">
+            <!-- Cat Head, Ears, Whiskers, Smile -->
+            <path d="M12 2a10 10 0 0 0 0 20c-1.33 0-2.58-.4-3.58-1.1M12 2c1.33 0 2.58.4 3.58 1.1M16 4.5l-2.5 3"/>
+            <path d="M8 4.5l2.5 3M8 12h8"/>
+            <path d="M10 16s.5 2 2 2 2-2 2-2"/>
+            <path d="M9 10a1 1 0 1 0 2 0 1 1 0 1 0-2 0"/>
+            <path d="M15 10a1 1 0 1 0 2 0 1 1 0 1 0-2 0"/>
+            <!-- Cute details for a "sketch" feel -->
+            <path d="M4 14l-.5 2M20 14l.5 2"/>
+            <path d="M4 14l1.5-1M20 14l-1.5-1"/>
+        </svg>
+        <p class="text-xs text-pink-pop font-semibold mt-1">Click Me!</p>
+    </div>
 
-    <!-- Main Content Card -->
-    <div class="main-card max-w-4xl w-full p-6 md:p-12 text-center">
-        
-        <header class="mb-8">
-            <h1 id="bouncyTitle" class="font-bubbly text-5xl md:text-7xl text-mint-accent mb-4">
-                Happy Birthday, Ky!
-            </h1>
-            <p class="text-xl text-gray-600">You made it! Just a few minutes left...</p>
-        </header>
+    <!-- Main Content Card -->
+    <div class="main-card max-w-4xl w-full p-6 md:p-12 text-center">
+        
+        <header class="mb-8">
+            <h1 id="bouncyTitle" class="font-bubbly text-5xl md:text-7xl text-mint-accent mb-4">
+                Happy Birthday, Ky!
+            </h1>
+            <p class="text-xl text-gray-600">You made it! Just a few minutes left...</p>
+        </header>
 
-        <main class="flex flex-col md:flex-row items-center justify-center gap-8">
-            
-            <!-- Left Side: Ky's Sketch (Clickable) -->
-            <div id="kySketchContainer" class="flex flex-col items-center group cursor-pointer w-full md:w-1/4" onclick="spinKy()">
-                <div id="kySketch" class="spin-ky text-6xl md:text-8xl text-mint-dark p-4 rounded-full bg-teal-50 group-hover:bg-teal-100 transition duration-300 border-2 border-mint-accent">
-                    <!-- Stylized Sketch SVG for Ky (Hand-drawn human icon) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#388e3c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-20 h-20 md:w-28 md:h-28">
-                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
-                        <path d="M10 11.5l-1 1M14 11.5l1 1"/>
-                        <path d="M12 15a3 3 0 0 0 3 3H9a3 3 0 0 0 3-3"/>
-                    </svg>
-                </div>
-                <p class="mt-3 text-lg font-semibold text-mint-dark opacity-70">Ky's Sketch (Spin Me!)</p>
-            </div>
-            
-            <!-- Center: Main Interaction -->
-            <div class="flex flex-col items-center justify-center w-full md:w-1/2">
-                
-                <div id="messageContainer" class="min-h-[10rem] p-4 mb-6 transition-opacity duration-500 opacity-0">
-                    <!-- Message content goes here -->
-                </div>
+        <main class="flex flex-col md:flex-row items-center justify-center gap-8">
+            
+            <!-- Left Side: Ky's Sketch (Clickable) -->
+            <div id="kySketchContainer" class="flex flex-col items-center group cursor-pointer w-full md:w-1/4" onclick="spinKy()">
+                <div id="kySketch" class="spin-ky text-6xl md:text-8xl text-mint-dark p-4 rounded-full bg-teal-50 group-hover:bg-teal-100 transition duration-300 border-2 border-mint-accent">
+                    <!-- Stylized Sketch SVG for Ky (Hand-drawn human icon) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#388e3c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-20 h-20 md:w-28 md:h-28">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                        <path d="M10 11.5l-1 1M14 11.5l1 1"/>
+                        <path d="M12 15a3 3 0 0 0 3 3H9a3 3 0 0 0 3-3"/>
+                    </svg>
+                </div>
+                <p class="mt-3 text-lg font-semibold text-mint-dark opacity-70">Ky's Sketch (Spin Me!)</p>
+            </div>
+            
+            <!-- Center: Main Interaction -->
+            <div class="flex flex-col items-center justify-center w-full md:w-1/2">
+                
+                <div id="messageContainer" class="min-h-[10rem] p-4 mb-6 transition-opacity duration-500 opacity-0">
+                    <!-- Message content goes here -->
+                </div>
 
-                <button id="mainButton" class="bubbly-button bg-mint-accent hover:bg-green-500 text-white font-bold py-4 px-10 rounded-xl text-xl shadow-lg border-2 border-mint-dark">
-                    Click to Reveal Your Gift Message!
-                </button>
-            </div>
-            
-             <!-- Right Side: Filler to keep balance -->
-             <div class="w-full md:w-1/4 flex justify-center items-start">
-                 <p class="text-2xl text-pink-pop transform rotate-3">So Cute!</p>
-             </div>
-        </main>
-        
-        <footer class="mt-10 pt-4 border-t border-teal-200">
-            <p class="text-sm text-gray-500">Built with all the love in the last two hours.</p>
-        </footer>
-    </div>
+                <button id="mainButton" class="bubbly-button bg-mint-accent hover:bg-green-500 text-white font-bold py-4 px-10 rounded-xl text-xl shadow-lg border-2 border-mint-dark">
+                    Click to Reveal Your Gift Message!
+                </button>
+            </div>
+            
+            <!-- Right Side: Picture Placement -->
+            <div class="w-full md:w-1/4 flex flex-col items-center justify-center">
+                <div class="p-2 border-4 border-pink-pop bg-pink-100 rounded-3xl shadow-xl transform hover:scale-105 transition duration-300">
+                    <!-- 
+                        ********************************************************
+                        *** IMAGE PLACEMENT: REPLACE THE SRC BELOW WITH KY'S PIC URL! ***
+                        ********************************************************
+                    -->
+                    <img 
+                        id="kyPicture"
+                        src=https://imgur.com/a/GH1TFok 
+                        alt="A birthday picture of Ky" 
+                        class="w-48 h-48 md:w-40 md:h-40 object-cover rounded-2xl border-2 border-white"
+                        onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/000000?text=Image+Unavailable';"
+                    >
+                </div>
+                <p class="mt-3 text-base font-semibold text-pink-pop">A Cute Snapshot!</p>
+            </div>
+        </main>
+        
+        <footer class="mt-10 pt-4 border-t border-teal-200">
+            <p class="text-sm text-gray-500">Built with all the love in the last two hours.</p>
+        </footer>
+    </div>
 
-    <!-- Hidden element to hold the final long message -->
-    <template id="longMessageTemplate">
-        <div id="longMessagePlaceholder" class="p-6 bg-teal-50 border-4 border-double border-pink-pop rounded-2xl text-left shadow-inner max-w-full">
-            <h3 class="font-bubbly text-3xl text-mint-dark mb-4 border-b pb-2 border-pink-pop">My Letter to Ky</h3>
-            <div class="text-lg text-gray-800 space-y-4 max-h-[30rem] overflow-y-auto p-2">
-                <!-- 
-                    ********************************************************
-                    *** THIS IS WHERE YOUR LONG BIRTHDAY LETTER GOES!  ***
-                    ********************************************************
-                    
-                    Use <p> tags for paragraphs. 
-                -->
-                <p>HAPPY BIRTHDAY KY! Sabi nila, save the best for last so ofc dapat huli regalo ko BWAHAHHAHAHAHAHHA.</p>
-                
-                <p>I wont say much here since not only is it hard to make long code pero js know na you have this incredible way of making even the worst days feel manageable. Im glad na you're my friend, and na im your friend. Even tho na I dont say this often, I'm grateful to have you.</p>
-                
-                <p>I hope na this coming year is filled with new opportunities, more bingewatching, and lots of tiny, happy/gutwrenching moments. Never change, Ky. You are perfect exactly as you are!</p>
-                
-                <p class="font-semibold mt-6 text-pink-pop">I'm not there physically so I wont be able to give you a hug, pero i'll still send you a virtual one, happy birthday ky!</p>
-                
-                <!-- ******************************************************** -->
-            </div>
-        </div>
-    </template>
-    
-    <script>
-        let clickCount = 0;
-        const mainButton = document.getElementById('mainButton');
-        const messageContainer = document.getElementById('messageContainer');
-        const longMessageTemplate = document.getElementById('longMessageTemplate');
-        const cat = document.getElementById('catInteractive');
+    <!-- Hidden element to hold the final long message -->
+    <template id="longMessageTemplate">
+        <div id="longMessagePlaceholder" class="p-6 bg-teal-50 border-4 border-double border-pink-pop rounded-2xl text-left shadow-inner max-w-full">
+            <h3 class="font-bubbly text-3xl text-mint-dark mb-4 border-b pb-2 border-pink-pop">My Letter to Ky</h3>
+            <div class="text-lg text-gray-800 space-y-4 max-h-[30rem] overflow-y-auto p-2">
+                <!-- 
+                    ********************************************************
+                    *** THIS IS WHERE YOUR LONG BIRTHDAY LETTER GOES!  ***
+                    ********************************************************
+                    
+                    Use <p> tags for paragraphs. 
+                -->
+                <p>HAPPY BIRTHDAY KY! Sabi nila, save the best for last so ofc dapat huli regalo ko BWAHAHHAHAHAHAHHA.</p>
+                
+                <p>I wont say much here since not only is it hard to make long code pero js know na you have this incredible way of making even the worst days feel manageable. Im glad na you're my friend, and na im your friend. Even tho na I dont say this often, I'm grateful to have you.</p>
+                
+                <p>I hope na this coming year is filled with new opportunities, more bingewatching, and lots of tiny, happy/gutwrenching moments. Never change, Ky. You are perfect exactly as you are!</p>
+                
+                <p class="font-semibold mt-6 text-pink-pop">I'm not there physically so I wont be able to give you a hug, pero i'll still send you a virtual one, happy birthday ky!</p>
+                
+                <!-- ******************************************************** -->
+            </div>
+        </div>
+    </template>
+    
+    <script>
+        let clickCount = 0;
+        const mainButton = document.getElementById('mainButton');
+        const messageContainer = document.getElementById('messageContainer');
+        const longMessageTemplate = document.getElementById('longMessageTemplate');
+        const cat = document.getElementById('catInteractive');
 
-        // --- Bouncing Text Setup ---
-        function animateBouncyText() {
-            const titleElement = document.getElementById('bouncyTitle');
-            const text = titleElement.textContent;
-            titleElement.innerHTML = ''; // Clear original text
+        // --- Bouncing Text Setup ---
+        function animateBouncyText() {
+            const titleElement = document.getElementById('bouncyTitle');
+            const text = titleElement.textContent;
+            titleElement.innerHTML = ''; // Clear original text
 
-            text.split('').forEach((letter, index) => {
-                const span = document.createElement('span');
-                span.textContent = letter === ' ' ? '\u00A0' : letter; // Use non-breaking space for spacing
-                span.classList.add('bouncing-letter');
-                
-                // Stagger the animation start time
-                span.style.animationDelay = `${index * 0.1}s`; 
-                titleElement.appendChild(span);
-            });
-        }
-        
-        // --- Core Button Logic ---
-        mainButton.addEventListener('click', () => {
-            clickCount++;
+            text.split('').forEach((letter, index) => {
+                const span = document.createElement('span');
+                span.textContent = letter === ' ' ? '\u00A0' : letter; // Use non-breaking space for spacing
+                span.classList.add('bouncing-letter');
+                
+                // Stagger the animation start time
+                span.style.animationDelay = `${index * 0.1}s`; 
+                titleElement.appendChild(span);
+            });
+        }
+        
+        // --- Core Button Logic ---
+        mainButton.addEventListener('click', () => {
+            clickCount++;
 
-            if (clickCount === 1) {
-                // First Click: Show the "save the best for last" message
-                messageContainer.classList.remove('opacity-0');
-                messageContainer.classList.add('opacity-100');
-                
-                messageContainer.innerHTML = `
-                    <p class="text-xl md:text-3xl font-bubbly text-pink-pop animate-pulse p-4 bg-yellow-50 rounded-lg shadow-md border-2 border-pink-300">
-                        "They say save the best for last, so ofc--my gift will be the last thing you receive!"
-                    </p>
-                `;
-                
-                mainButton.textContent = "Last Click for the Long Letter!";
-                mainButton.classList.remove('bg-mint-accent');
-                mainButton.classList.add('bg-pink-pop', 'shadow-pink-pop'); 
+            if (clickCount === 1) {
+                // First Click: Show the "save the best for last" message
+                messageContainer.classList.remove('opacity-0');
+                messageContainer.classList.add('opacity-100');
+                
+                messageContainer.innerHTML = `
+                    <p class="text-xl md:text-3xl font-bubbly text-pink-pop animate-pulse p-4 bg-yellow-50 rounded-lg shadow-md border-2 border-pink-300">
+                        "They say save the best for last, so ofc--my gift will be the last thing you receive!"
+                    </p>
+                `;
+                
+                mainButton.textContent = "Last Click for the Long Letter!";
+                mainButton.classList.remove('bg-mint-accent');
+                mainButton.classList.add('bg-pink-pop', 'shadow-pink-pop'); 
 
-            } else if (clickCount >= 2) {
-                // Second Click: Show the long message from the template
-                messageContainer.innerHTML = longMessageTemplate.innerHTML;
-                
-                // Hide and disable the button after the final reveal
-                mainButton.textContent = "Message Revealed!";
-                mainButton.classList.remove('bg-pink-pop');
-                mainButton.classList.add('bg-gray-300', 'cursor-not-allowed', 'shadow-none');
-                mainButton.disabled = true;
+            } else if (clickCount >= 2) {
+                // Second Click: Show the long message from the template
+                messageContainer.innerHTML = longMessageTemplate.innerHTML;
+                
+                // Hide and disable the button after the final reveal
+                mainButton.textContent = "Message Revealed!";
+                mainButton.classList.remove('bg-pink-pop');
+                mainButton.classList.add('bg-gray-300', 'cursor-not-allowed', 'shadow-none');
+                mainButton.disabled = true;
 
-                // Make the cat move wildly 5 times!
-                for (let i = 0; i < 5; i++) {
-                    setTimeout(moveCatHyperactively, i * 200);
-                }
-            }
-        });
+                // Make the cat move wildly 5 times!
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(moveCatHyperactively, i * 200);
+                }
+            }
+        });
 
 
-        // --- Ky Sketch Interaction (Bouncy Spin) ---
-        function spinKy() {
-            const sketch = document.getElementById('kySketch');
-            sketch.classList.add('spinning');
-            
-            setTimeout(() => {
-                sketch.classList.remove('spinning');
-            }, 600); // Wait slightly longer than transition
-        }
-        
-        // --- Cat Interaction (Hyperactive Movement ALL around the screen) ---
-        function moveCatHyperactively() {
-            // Get boundaries (Cat size approx 90px)
-            const padding = 10;
-            const screenWidth = window.innerWidth - cat.offsetWidth - padding;
-            const screenHeight = window.innerHeight - cat.offsetHeight - padding;
+        // --- Ky Sketch Interaction (Bouncy Spin) ---
+        function spinKy() {
+            const sketch = document.getElementById('kySketch');
+            sketch.classList.add('spinning');
+            
+            setTimeout(() => {
+                sketch.classList.remove('spinning');
+            }, 600); // Wait slightly longer than transition
+        }
+        
+        // --- Cat Interaction (Hyperactive Movement ALL around the screen) ---
+        function moveCatHyperactively() {
+            // Get boundaries (Cat size approx 90px)
+            const padding = 10;
+            const screenWidth = window.innerWidth - cat.offsetWidth - padding;
+            const screenHeight = window.innerHeight - cat.offsetHeight - padding;
 
-            // Generate new random position
-            const newX = Math.random() * screenWidth;
-            const newY = Math.random() * screenHeight;
-            
-            // Calculate a random rotation for extra fun
-            const newRotation = Math.random() * 1080 - 540; // Spin between -540 and 540 degrees
+            // Generate new random position
+            const newX = Math.random() * screenWidth;
+            const newY = Math.random() * screenHeight;
+            
+            // Calculate a random rotation for extra fun
+            const newRotation = Math.random() * 1080 - 540; // Spin between -540 and 540 degrees
 
-            // Apply the transformation
-            cat.style.transform = `translate(${newX}px, ${newY}px) rotate(${newRotation}deg)`;
-        }
-        
-        // Initial setup and recurring movement for the cat
-        window.onload = () => {
-             // Start the bouncy text animation
-             animateBouncyText();
-             
-             // Set up a recurring movement for the cat (every few seconds)
-             setInterval(moveCatHyperactively, 4000); 
-             
-             // Give it a starting position
-             moveCatHyperactively();
-        };
+            // Apply the transformation
+            cat.style.transform = `translate(${newX}px, ${newY}px) rotate(${newRotation}deg)`;
+        }
+        
+        // Initial setup and recurring movement for the cat
+        window.onload = () => {
+             // Start the bouncy text animation
+             animateBouncyText();
+             
+             // Set up a recurring movement for the cat (every few seconds)
+             setInterval(moveCatHyperactively, 4000); 
+             
+             // Give it a starting position
+             moveCatHyperactively();
+        };
 
-    </script>
+    </script>
 </body>
+</html>
 </html>
